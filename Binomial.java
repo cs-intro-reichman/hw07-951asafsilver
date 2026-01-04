@@ -1,16 +1,15 @@
 public class Binomial {
 
-    // פונקציה רגילה (למקרה שהטסט קורא לה)
-    public static long binomial(int n, int k) {
+    // שינינו את השם ל-binomial1 כפי שהטסט דורש
+    public static long binomial1(int n, int k) {
         if (k < 0 || k > n) return 0;
         if (k == 0 || k == n) return 1;
-        return binomial(n - 1, k - 1) + binomial(n - 1, k);
+        return binomial1(n - 1, k - 1) + binomial1(n - 1, k);
     }
 
     // פונקציית ה-Memoization הראשית
     public static long memoBinomial(int n, int k) {
         if (k < 0 || k > n) return 0;
-        // יצירת מערך מסוג long כדי למנוע Overflow
         long[][] memo = new long[n + 1][k + 1];
         return memoBinomial(n, k, memo);
     }
@@ -20,10 +19,8 @@ public class Binomial {
         if (k < 0 || k > n) return 0;
         if (k == 0 || k == n) return 1;
         
-        // אם כבר חישבנו, החזר את הערך (מסוג long)
         if (memo[n][k] != 0) return memo[n][k];
         
-        // חישוב ושמירה בתוך long
         memo[n][k] = memoBinomial(n - 1, k - 1, memo) + memoBinomial(n - 1, k, memo);
         return memo[n][k];
     }
@@ -32,6 +29,9 @@ public class Binomial {
         if (args.length < 2) return;
         int n = Integer.parseInt(args[0]);
         int k = Integer.parseInt(args[1]);
-        System.out.println(memoBinomial(n, k));
+        // אם תרצה לבדוק ידנית את binomial1
+        System.out.println(binomial1(n, k));
+        // או את הממו
+        // System.out.println(memoBinomial(n, k));
     }
 }
