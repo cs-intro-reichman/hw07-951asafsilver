@@ -1,24 +1,26 @@
 public class Binomial {
 
-    // הפונקציה שהטסטר מחפש בשם "binomial"
+    // אפשרות 1: השם binomial
     public static long binomial(int n, int k) {
-        if (k < 0 || k > n) return 0;
-        if (k == 0 || k == n) return 1;
-        return binomial(n - 1, k - 1) + binomial(n - 1, k);
+        return memoBinomial(n, k);
     }
 
-    // פונקציית ה-Memoization שהטסטר מחפש עבור השאלה השנייה
+    // אפשרות 2: השם binomial1 (שהופיע בשגיאה האחרונה שלך)
+    public static long binomial1(int n, int k) {
+        return memoBinomial(n, k);
+    }
+
+    // הפונקציה שמבצעת את החישוב המהיר עם הזיכרון (Memoization)
     public static long memoBinomial(int n, int k) {
         if (k < 0 || k > n) return 0;
         long[][] memo = new long[n + 1][k + 1];
         return memoBinomial(n, k, memo);
     }
 
-    // פונקציית עזר פרטית לחישוב עם הזיכרון
+    // פונקציית העזר הפרטית
     private static long memoBinomial(int n, int k, long[][] memo) {
         if (k < 0 || k > n) return 0;
         if (k == 0 || k == n) return 1;
-        
         if (memo[n][k] != 0) return memo[n][k];
         
         memo[n][k] = memoBinomial(n - 1, k - 1, memo) + memoBinomial(n - 1, k, memo);
